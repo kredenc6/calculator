@@ -6,6 +6,15 @@ const Keyboard = props => {
     let newValue;
     let buttonClasses;
     const {num1, num2, operator, result} = props.calcVariables;
+    
+    if(props.message.visible) {
+      props.setMessage(
+        {
+          ...props.message,
+          visible: false
+        }
+      );
+    }
 
     if(!event.key) {
       newValue = event.target.innerText;
@@ -80,7 +89,7 @@ const Keyboard = props => {
           props.setCalcVariables(
             {
               ...props.calcVariables,
-              num1: `${num1}.`
+              num1: `${num1}.`,
             });
         }
     }
