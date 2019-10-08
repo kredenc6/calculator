@@ -1,0 +1,80 @@
+.App {
+  width: 25rem;
+  height: 30rem;
+  min-width: 400px;
+  min-height: 500px;
+  margin: 1rem auto 0 auto;
+  border: 1px solid brown;
+  background-color: rgb(34, 12, 0);;
+}
+
+.mainDisplay {
+  height: 25%;
+  padding: .2rem .5rem;
+  font-size: 3rem;
+  text-align: right;
+  overflow: hidden;
+  color: whitesmoke;
+}
+
+.mainDisplay:hover {
+  cursor: default;
+}
+
+.keyboard {
+  height: 75%;
+  display: flex;
+  flex-flow: column nowrap;
+  font-weight: 700;
+}
+
+.row {
+  display: flex;
+  height: 25%;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  font-size: 2.5rem;
+  border: 1px solid brown;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.wide {
+  width: 50%;
+}
+
+.clear {
+  color: rgb(255, 36, 72);
+  border: 1px solid red;
+}
+
+.clear:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.clear,
+.number,
+.decimal {
+  background-color: #fff;
+}
+
+.number:hover,
+.comma:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.operator {
+  color: whitesmoke;
+  background-color: rgb(255, 36, 72);
+}
+
+.operator:hover {
+  background-color: rgb(233, 31, 64);
+}
