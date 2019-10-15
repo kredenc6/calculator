@@ -26,13 +26,34 @@ const Keyboard = props => {
       if(!key) return;
     }
 
+    if(buttonClasses.includes("Backspace")) {
+      if(result ||
+        (!num2 && !operator && num1 === "0")) return;
+      const calcVariablesKeys = ["num2", "operator", "num1"];
+      for(let key of calcVariablesKeys) {
+        if(props.calcVariables[key]) {
+          const newValue = {};
+          newValue[key] = props.calcVariables[key].slice(0, -1);
+          
+          props.setCalcVariables(
+            {
+              ...props.calcVariables,
+              ...newValue
+            }
+          );
+            break;
+        }
+      }
+    }
+
     if(buttonClasses.includes("clear")) {
       props.setCalcVariables(
         {
           num1: "0",
           num2: "",
           operator: ""
-        });
+        }
+      );
     }
 
     if(buttonClasses.includes("operator") &&
@@ -43,14 +64,16 @@ const Keyboard = props => {
             num1: calculate(num1, num2, operator),
             num2: "",
             operator: newValue
-          });
+          }
+        );
       } else {
         props.setCalcVariables(
           {
             ...props.calcVariables,
             operator: newValue,
             result: false
-          });
+          }
+        );
       }
     }
 
@@ -63,7 +86,7 @@ const Keyboard = props => {
             operator: "",
             result: true
           }
-        )
+        );
       }
     }
 
@@ -73,8 +96,9 @@ const Keyboard = props => {
           {...props.calcVariables,
             num1: "0.",
             result: false
-          });
-        } else
+          }
+        );
+      } else
       if(operator) {
         if(num2.length >= props.maxNumbers) return;
         if(num2.includes(".")) return;
@@ -82,7 +106,8 @@ const Keyboard = props => {
           {
             ...props.calcVariables,
             num2: `${num2 === "0" || num2 === "" ? "0" : num2}.`
-          });
+          }
+        );
       } else {
           if(num1.length >= props.maxNumbers) return;
           if(num1.includes(".")) return;
@@ -90,7 +115,8 @@ const Keyboard = props => {
             {
               ...props.calcVariables,
               num1: `${num1}.`,
-            });
+            }
+          );
         }
     }
 
@@ -100,22 +126,26 @@ const Keyboard = props => {
           {...props.calcVariables,
             num1: `${newValue}`,
             result: false
-          });
+          }
+        );
         } else
         if(operator) {
           if(num2.length >= props.maxNumbers) return;
-          props.setCalcVariables(
-            {
-              ...props.calcVariables,
-              num2: `${num2 === "0" ? "" : num2}${newValue}`
-            });
-          } else {
+            props.setCalcVariables(
+              {
+                ...props.calcVariables,
+                num2: `${num2 === "0" ? "" : num2}${newValue}`
+              }
+            );
+          }
+          else {
             if(num1.length >= props.maxNumbers && !result) return;
             props.setCalcVariables(
               {
                 ...props.calcVariables,
                 num1: `${num1 === "0" ? "" : num1}${newValue}`
-              });
+              }
+            );
           }
     }
   };
@@ -141,6 +171,11 @@ const Keyboard = props => {
     if(event.key === "Backspace" || event.key === "Delete") {
       key = "clear";
       classNameSubstitute = "clear";
+    }
+
+    if(event.key === "Backspace") {
+      key = event.key;
+      classNameSubstitute = event.key;
     }
 
     if(event.key === "," || event.key === ".") {

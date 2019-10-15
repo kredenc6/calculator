@@ -17,16 +17,17 @@ function App() {
       result: false
     });
 
+  // maxNumbers limits result as well as input(in Keyboard.jsx)
   const maxNumbers = 15;
 
   // adjusting/allowing max count of integers and decimals
   useEffect(() => {
     const {num1, result} = calcVariables;
-    const adjustedMax = maxNumbers + 2;
-    if(result && num1.length > (adjustedMax)) {
+    const resultMaxNumbers = maxNumbers + 2;
+    if(result && num1.length > (resultMaxNumbers)) {
 
-      if(Number(num1) > Number("" + "9".repeat(adjustedMax)) ||
-         Number(num1) < Number("-" + "9".repeat(adjustedMax - 1))) {
+      if(Number(num1) > Number("" + "9".repeat(resultMaxNumbers)) ||
+         Number(num1) < Number("-" + "9".repeat(resultMaxNumbers - 1))) {
         setCalcVariables(
           {
             ...calcVariables,
@@ -40,10 +41,11 @@ function App() {
           }
         )
       } else {
+        let roundedResult = num1.endsWith(".") ? num1.substring(0, resultMaxNumbers - 1) : num1.substring(0, resultMaxNumbers);
         setCalcVariables(
           {
             ...calcVariables,
-            num1: num1.substring(0, adjustedMax)
+            num1: roundedResult
           }
         );
       }
