@@ -59,13 +59,24 @@ function App() {
       const warningNode = document.getElementsByClassName("warning")[0];
       const buttonNodes = document.getElementsByClassName("button");
       const displayWidth = /\d+/.exec(window.getComputedStyle(mainDisplayNode).width)[0];
-      const calculatedSize = `${Math.round(displayWidth / 9)}px`;
+      let calculatedSize;
+      if(displayWidth > 390) {
+        calculatedSize = `${Math.round(displayWidth / 9)}px`;
+        warningNode.style.fontSize = `${Math.round(displayWidth / 25)}px`;
+      }
+      else {
+        calculatedSize = `${Math.round(displayWidth / 10)}px`;
+        warningNode.style.fontSize = `${Math.round(displayWidth / 30)}px`;
+      }
       
       mainDisplayNode.style.fontSize = calculatedSize;
       for(let button of buttonNodes) {
         button.style.fontSize = calculatedSize;
       }
-      warningNode.style.fontSize = `${Math.round(displayWidth / 25)}px`;
+
+      console.log(displayWidth);
+      console.log(calculatedSize);
+      console.log(`${Math.round(displayWidth / 25)}px`);
     }
 
     computeAndStyleFontSize();
