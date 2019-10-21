@@ -60,6 +60,7 @@ function App() {
       const buttonNodes = document.getElementsByClassName("button");
       const displayWidth = /\d+/.exec(window.getComputedStyle(mainDisplayNode).width)[0];
       let calculatedSize;
+      
       if(displayWidth > 390) {
         calculatedSize = `${Math.round(displayWidth / 9)}px`;
         warningNode.style.fontSize = `${Math.round(displayWidth / 25)}px`;
@@ -73,10 +74,6 @@ function App() {
       for(let button of buttonNodes) {
         button.style.fontSize = calculatedSize;
       }
-
-      console.log(displayWidth);
-      console.log(calculatedSize);
-      console.log(`${Math.round(displayWidth / 25)}px`);
     }
 
     computeAndStyleFontSize();
