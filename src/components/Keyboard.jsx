@@ -61,7 +61,7 @@ const Keyboard = props => {
       if(num2) { 
         props.setCalcVariables(
           {
-            num1: calculate(num1, num2, operator),
+            num1: props.calculate(num1, num2, operator),
             num2: "",
             operator: newValue
           }
@@ -81,7 +81,7 @@ const Keyboard = props => {
       if(num2) {
         props.setCalcVariables(
           {
-            num1: calculate(num1, num2, operator),
+            num1: props.calculate(num1, num2, operator),
             num2: "",
             operator: "",
             result: true
@@ -186,17 +186,12 @@ const Keyboard = props => {
     return {key, classNameSubstitute};
   };
 
-  let calculate = (num1,num2,operator) => {
-    const result = Function(`return ${num1} ${operator} ${num2}`)();
-    return result.toString();
-  }
-
   useEffect(() => {
     window.addEventListener("keydown", handleClick);
     return () => {
       window.removeEventListener("keydown", handleClick);
     }
-  }, [props.calcVariables]);
+  });
 
   return(
     <div className="keyboard">

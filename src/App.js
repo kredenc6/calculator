@@ -17,17 +17,50 @@ function App() {
       result: false
     });
 
-  // maxNumbers limits result as well as input(in Keyboard.jsx)
-  const maxNumbers = 15;
+    // maxNumbers limits result as well as input(in Keyboard.jsx)
+    const MAX_NUMBERS = 15;
+    
+    const calculate = (num1,num2,operator) => {
+      let result;
+      switch (operator) {
+        case "+":
+          result = Number(num1) + Number(num2);
+          break;
+      
+        case "-":
+          result = num1 - num2;
+          break;
+      
+        case "*":
+          result = num1 * num2;
+          break;
+      
+        case "/":
+          result = num1 / num2;
+          break;
+      
+        default:
+          console.error(`Switch statement received unknown operator "${operator}".`);
+          return;
+      }
+      if(Number.isInteger(result)) return result.toString();
+      
+      result = result.toPrecision(MAX_NUMBERS).toString(); // round decimal to precision
+      for(let i=result.length - 1; ;i--) { // get rid of redundant zeros
+        if(result[i] === "0") result = result.substring(0, result.length - 1);
+        else break;
+      }
+      return result;
+    };
 
   // adjusting/allowing max count of integers and decimals
   useEffect(() => {
     const {num1, result} = calcVariables;
-    const resultMaxNumbers = maxNumbers + 2;
-    if(result && num1.length > (resultMaxNumbers)) {
+    const maxNumbers = MAX_NUMBERS + 2;
+    if(result && num1.length > (maxNumbers)) {
 
-      if(Number(num1) > Number("" + "9".repeat(resultMaxNumbers)) ||
-         Number(num1) < Number("-" + "9".repeat(resultMaxNumbers - 1))) {
+      if(Number(num1) > Number("" + "9".repeat(maxNumbers)) ||
+         Number(num1) < Number("-" + "9".repeat(maxNumbers - 1))) {
         setCalcVariables(
           {
             ...calcVariables,
@@ -41,7 +74,7 @@ function App() {
           }
         )
       } else {
-        let roundedResult = num1.endsWith(".") ? num1.substring(0, resultMaxNumbers - 1) : num1.substring(0, resultMaxNumbers);
+        let roundedResult = num1.endsWith(".") ? num1.substring(0, maxNumbers - 1) : num1.substring(0, maxNumbers);
         setCalcVariables(
           {
             ...calcVariables,
@@ -56,18 +89,15 @@ function App() {
   useEffect(() => {
     function computeAndStyleFontSize() {
       const mainDisplayNode = document.getElementsByClassName("mainDisplay")[0];
-      const warningNode = document.getElementsByClassName("warning")[0];
       const buttonNodes = document.getElementsByClassName("button");
       const displayWidth = /\d+/.exec(window.getComputedStyle(mainDisplayNode).width)[0];
       let calculatedSize;
       
       if(displayWidth > 390) {
         calculatedSize = `${Math.round(displayWidth / 9)}px`;
-        warningNode.style.fontSize = `${Math.round(displayWidth / 25)}px`;
       }
       else {
         calculatedSize = `${Math.round(displayWidth / 10)}px`;
-        warningNode.style.fontSize = `${Math.round(displayWidth / 30)}px`;
       }
       
       mainDisplayNode.style.fontSize = calculatedSize;
@@ -86,9 +116,10 @@ function App() {
       <Keyboard
         calcVariables={calcVariables}
         setCalcVariables={setCalcVariables}
-        maxNumbers={maxNumbers}
+        maxNumbers={MAX_NUMBERS}
         message={message}
         setMessage={setMessage}
+        calculate={calculate}
       />
     </div>
   );
